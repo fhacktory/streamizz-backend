@@ -25,13 +25,11 @@ module.exports = {
 
   create: function(req, res) {
 
-    res.end();
-
     var params = _.extend(req.query || {}, req.params || {}, req.body || {});
     var OpenTok = require('opentok');
     var opentok;
 
-    opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.api_secret);
+    opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.opentok.api_secret);
 
     try {
       //Création de la session opentok
@@ -42,9 +40,7 @@ module.exports = {
         console.log("Création session : " + params.sessionid);
         Stream.create(params, function streamCreated(err, str) {
           if (err) return res.send(err, 500);
-          console.log("Création d'un stream");
           res.end(JSON.stringify(str));
-
         });
       });
     } catch (err) {
@@ -64,8 +60,7 @@ module.exports = {
     }
     var sessionId = params.sessionid;
     var OpenTok = require('opentok');
-    var opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.api_secret);
-
+    opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.opentok.api_secret);
 
     //Création du token opentok publisher
     var token;
@@ -101,7 +96,7 @@ module.exports = {
     }
     var sessionId = params.sessionid;
     var OpenTok = require('opentok');
-    var opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.api_secret);
+    opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.opentok.api_secret);
 
     //Création du token opentok subscriber
     var token;
