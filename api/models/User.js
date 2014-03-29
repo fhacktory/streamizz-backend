@@ -9,11 +9,25 @@
 module.exports = {
 
   attributes: {
-  	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
-    
+
+        nickname: {
+            type: 'string',
+            required: true
+        },
+        firstname: {
+            type: 'string'
+        },
+        lastname: {
+            type: 'string',
+        },
+        email: {
+            type: 'string',
+            email: true,
+            required: true,
+            unique: true
+        },
+        picture: 'string'
+
   }
 
 };

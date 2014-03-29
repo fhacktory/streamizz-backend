@@ -16,15 +16,25 @@
  */
 
 module.exports = {
-    
-  
+
+
 
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)
    */
-  _config: {}
+  _config: {},
 
-  
+  create: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    User.create(params, function userCreated(err, createdUser) {
+      if (err) return res.send(JSON.stringify(err), 500);
+      res.end(JSON.stringify(createdUser));
+    });
+  }
+
+
+
 };
