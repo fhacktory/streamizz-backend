@@ -16,15 +16,26 @@
  */
 
 module.exports = {
-    
-  
+
+
 
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to EventController)
    */
-  _config: {}
+  _config: {},
 
-  
+  create: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    Event.create(params, function eventCreated(err, createdEvent) {
+
+      if (err) return res.send(err, 500);
+
+      res.end(JSON.stringify(createdEvent));
+    });
+  }
+
+
 };

@@ -9,11 +9,33 @@
 module.exports = {
 
   attributes: {
-  	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
-    
+
+    name: {
+      type: 'string'
+    },
+    description: {
+      type: 'string'
+    },
+    latitude: {
+      type: 'string'
+    },
+    longitude: {
+      type: 'string'
+    },
+    address: {
+      type: 'string'
+    },
+    owner: {
+      type: 'string'
+    },
+    access: {
+      type: 'string'
+    },
+    picture: {
+      type: 'string'
+    }
+
   }
+
 
 };
