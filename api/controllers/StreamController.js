@@ -16,15 +16,114 @@
  */
 
 module.exports = {
-    
-  
-
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to StreamController)
    */
-  _config: {}
+  _config: {},
 
-  
+  create: function(req, res) {
+
+    res.end();
+
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+    var OpenTok = require('opentok');
+    var opentok;
+
+    opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.api_secret);
+
+    try {
+      //Création de la session opentok
+      opentok.createSession(function(err, sessionId) {
+        if (err) return res.send(err, 500);
+
+        params.sessionid = sessionId;
+        console.log("Création session : " + params.sessionid);
+        Stream.create(params, function streamCreated(err, str) {
+          if (err) return res.send(err, 500);
+          console.log("Création d'un stream");
+          res.end(JSON.stringify(str));
+
+        });
+      });
+    } catch (err) {
+      return res.send({
+        "error": "opentok createSession"
+      }, 500);
+    }
+  },
+
+  publisherToken: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    if (!params.sessionid) {
+      return res.send({
+        "error": "missing sessionId"
+      }, 500);
+    }
+    var sessionId = params.sessionid;
+    var OpenTok = require('opentok');
+    var opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.api_secret);
+
+
+    //Création du token opentok publisher
+    var token;
+    try {
+      token = opentok.generateToken({
+        session_id: sessionId,
+        role: OpenTok.RoleConstants.PUBLISHER
+      });
+    } catch (err) {
+      return res.send({
+        "error": "opentok generateToken"
+      }, 500);
+    }
+
+    if (!token) {
+      return res.send({
+        "error": "invalid token"
+      }, 500);
+    }
+
+    var result = {};
+    result.token = token;
+    res.end(JSON.stringify(result));
+  },
+
+  subscriberToken: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    if (!params.sessionid) {
+      return res.send({
+        "error": "missing sessionId"
+      }, 500);
+    }
+    var sessionId = params.sessionid;
+    var OpenTok = require('opentok');
+    var opentok = new OpenTok.OpenTokSDK(sails.config.opentok.api_key, sails.config.api_secret);
+
+    //Création du token opentok subscriber
+    var token;
+    try {
+      token = opentok.generateToken({
+        session_id: sessionId,
+        role: OpenTok.RoleConstants.PUBLISHER
+      });
+    } catch (err) {
+      return res.send({
+        "error": "opentok generateToken"
+      }, 500);
+    }
+
+    if (!token) {
+      return res.send({
+        "error": "invalid token"
+      }, 500);
+    }
+
+    var result = {};
+    result.token = token;
+    res.end(JSON.stringify(result));
+  }
 };

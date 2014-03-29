@@ -9,11 +9,22 @@
 module.exports = {
 
   attributes: {
-  	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
-    
+
+    start: {
+      type: 'string'
+    },
+    sessionid: {
+      type: 'string'
+    },
+
+    latitude: {
+      type: 'string'
+    },
+
+    longitude: {
+      type: 'string'
+    }
+
   }
 
 };
