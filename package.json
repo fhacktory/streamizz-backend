@@ -9,7 +9,8 @@
         "sails-disk": "~0.9.0",
         "ejs": "0.8.4",
         "optimist": "0.3.4",
-	"opentok": "1.0.2"
+	"opentok": "1.0.2",
+	"sails-mongo": "0.9.x"
     },
     "scripts": {
         "start": "node app.js",
