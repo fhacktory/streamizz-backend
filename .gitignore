@@ -1,2 +1,4 @@
 disk.db
 config/opentok.js
+node_modules/
+
