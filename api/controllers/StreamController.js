@@ -50,6 +50,26 @@ module.exports = {
     }
   },
 
+  getComments: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    if (!params.streamid) {
+      return res.send({
+        "error": "missing eventid"
+      }, 500);
+    }
+
+    Comment.find()
+      .where({
+        streamid: params.streamid
+      })
+      .exec(function(err, comments) {
+        if (err) return res.send(err, 500);
+
+        res.end(JSON.stringify(comments));
+      });
+  },
+
   publisherToken: function(req, res) {
     var params = _.extend(req.query || {}, req.params || {}, req.body || {});
 
