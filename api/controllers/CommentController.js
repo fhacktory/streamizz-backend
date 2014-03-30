@@ -16,15 +16,23 @@
  */
 
 module.exports = {
-    
-  
+
+
 
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to CommentController)
    */
-  _config: {}
+  _config: {},
 
-  
+  create: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    Comment.create(params, function commentCreated(err, createdComment) {
+      if (err) return res.send(JSON.stringify(err), 500);
+      res.end(JSON.stringify(createdComment));
+    });
+  }
+
 };

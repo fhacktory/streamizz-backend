@@ -10,9 +10,6 @@ module.exports = {
 
   attributes: {
 
-    start: {
-      type: 'string'
-    },
     sessionid: {
       type: 'string'
     },
@@ -22,6 +19,9 @@ module.exports = {
     },
 
     longitude: {
+      type: 'string'
+    },
+    eventid: {
       type: 'string'
     }
 

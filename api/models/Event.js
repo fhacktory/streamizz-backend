@@ -25,7 +25,7 @@ module.exports = {
     address: {
       type: 'string'
     },
-    owner: {
+    userid: {
       type: 'string'
     },
     access: {
@@ -33,7 +33,14 @@ module.exports = {
     },
     picture: {
       type: 'string'
+    },
+    startDate: {
+      type: 'string'
+    },
+    endDate: {
+      type: 'string'
     }
+
 
   }
 

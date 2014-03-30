@@ -8,12 +8,22 @@
 
 module.exports = {
 
+
   attributes: {
-  	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
-    
+
+    userid: {
+      type: 'string',
+      required: true
+
+    },
+    streamid: {
+      type: 'string',
+      required: true
+    },
+    message: {
+      type: 'string',
+      required: true
+    }
   }
 
 };
