@@ -59,6 +59,45 @@ module.exports = {
   },
 
 
+  getFromHashtag: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    if (!params.hashtag) {
+      return res.send({
+        "error": "missing hashtag"
+      }, 500);
+    }
+
+    Event.find()
+      .exec(function(err, events) {
+        if (err) return res.send(err, 500);
+        var result = [];
+
+        Hashtag.find()
+          .where({
+            message: params.hashtag
+          }).exec(function(err2, hashtags) {
+
+
+            for (var l = 0; l < events.length; l++) {
+
+              for (var i = 0; i < hashtags.length; i++) {
+
+                if (events[l].id == hashtags[i].eventid && hashtags[i].message == params.hashtag) {
+                  result.push(events[l]);
+                }
+
+              }
+            }
+            res.end(JSON.stringify(result));
+
+          });
+
+      });
+
+  },
+
+
 
   find: function(req, res) {
     var params = _.extend(req.query || {}, req.params || {}, req.body || {});
