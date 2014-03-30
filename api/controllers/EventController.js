@@ -59,4 +59,57 @@ module.exports = {
   },
 
 
+
+  find: function(req, res) {
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    if (params.id) {
+      Event.find()
+        .where({
+          id: params.id
+        })
+        .exec(function(err, events) {
+          if (err) return res.send(err, 500);
+          Hashtag.find()
+            .where({
+              eventid: params.id
+            })
+            .exec(function(err2, hashtags) {
+              if (err2) return res.send(err2, 500);
+              events[0].hashtags = hashtags;
+              console.log(events);
+              res.end(JSON.stringify(events));
+            });
+        });
+    } else {
+
+
+      Event.find()
+        .exec(function(err, events) {
+          if (err) return res.send(err, 500);
+
+          Hashtag.find().exec(function(err2, hashtags) {
+
+            for (var k = 0; k < events.length; k++) {
+              events[k].hashtags = [];
+            }
+
+            for (var l = 0; l < events.length; l++) {
+
+              for (var i = 0; i < hashtags.length; i++) {
+
+                if (events[l].id == hashtags[i].eventid) {
+                  events[l].hashtags.push(hashtags[i]);
+                }
+
+              }
+            }
+            res.end(JSON.stringify(events));
+
+          });
+
+        });
+    }
+
+  }
 };
