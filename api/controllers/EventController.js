@@ -35,7 +35,28 @@ module.exports = {
 
       res.end(JSON.stringify(createdEvent));
     });
-  }
+  },
+
+  getStreams: function(req, res) {
+    console.log("toto");
+    var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+
+    if (!params.eventid) {
+      return res.send({
+        "error": "missing eventid"
+      }, 500);
+    }
+
+    Stream.find()
+      .where({
+        eventid: params.eventid
+      })
+      .exec(function(err, streams) {
+        if (err) return res.send(err, 500);
+
+        res.end(JSON.stringify(streams));
+      });
+  },
 
 
 };

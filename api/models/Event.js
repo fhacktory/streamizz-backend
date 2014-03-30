@@ -40,9 +40,5 @@ module.exports = {
     endDate: {
       type: 'string'
     }
-
-
   }
-
-
 };
